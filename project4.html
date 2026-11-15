@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Everyday Store | Online Shopping</title>
+  <style>
+    :root {
+      --ink: #17211b;
+      --muted: #68736c;
+      --green: #236b45;
+      --pale: #f4f5ef;
+      --line: #e7e9e3;
+      --white: #fff;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #fff;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+
+    .announcement {
+      padding: 10px 16px;
+      color: white;
+      background: var(--green);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 17px max(5%, calc((100% - 1160px) / 2));
+      background: white;
+      border-bottom: 1px solid var(--line);
+    }
+    .logo {
+      color: var(--green);
+      font-size: 23px;
+      font-weight: 800;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .search {
+      width: min(390px, 42vw);
+      padding: 11px 14px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      outline-color: var(--green);
+    }
+    .cart-button {
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: white;
+      color: var(--ink);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    main { max-width: 1160px; margin: auto; padding: 0 22px; }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      align-items: center;
+      gap: 30px;
+      margin: 28px 0 45px;
+      padding: clamp(28px, 6vw, 70px);
+      border-radius: 18px;
+      background: var(--pale);
+    }
+    .eyebrow {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+    }
+    h1 {
+      max-width: 520px;
+      margin: 12px 0;
+      font-size: clamp(34px, 5vw, 59px);
+      line-height: 1.05;
+    }
+    .hero p { max-width: 480px; color: var(--muted); line-height: 1.7; }
+    .shop-link {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 13px 19px;
+      border-radius: 7px;
+      color: white;
+      background: var(--green);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .hero-art {
+      display: grid;
+      min-height: 260px;
+      place-items: center;
+      border-radius: 15px;
+      background: linear-gradient(135deg, #dce9d9, #f3e7d1);
+      font-size: clamp(100px, 18vw, 190px);
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 18px;
+    }
+    h2 { margin: 0; font-size: 27px; }
+    .section-heading p { margin: 7px 0 0; color: var(--muted); }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin: 20px 0;
+    }
+    .filter {
+      padding: 9px 14px;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      background: white;
+      color: var(--ink);
+    }
+    .filter.active, .filter:hover {
+      border-color: var(--green);
+      color: white;
+      background: var(--green);
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+    .card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: white;
+    }
+    .product-art {
+      display: grid;
+      min-height: 185px;
+      place-items: center;
+      background: var(--pale);
+      font-size: 76px;
+    }
+    .product-info { padding: 15px; }
+    .tag {
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .product-info h3 { margin: 7px 0; font-size: 16px; }
+    .rating { color: #b77b20; font-size: 13px; }
+    .product-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .price { font-weight: 800; }
+    .add-button {
+      padding: 9px 11px;
+      border: 0;
+      border-radius: 6px;
+      color: white;
+      background: var(--green);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .empty { grid-column: 1 / -1; padding: 35px; color: var(--muted); text-align: center; }
+
+    .benefits {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin: 45px 0;
+    }
+    .benefit {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+    }
+    .benefit strong { display: block; margin-bottom: 6px; }
+    .benefit span { color: var(--muted); font-size: 14px; }
+
+    footer {
+      padding: 25px 20px;
+      color: #dce5dd;
+      background: #17211b;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: none;
+      background: #0008;
+    }
+    .overlay.open { display: block; }
+    .cart-panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: flex;
+      width: min(420px, 100%);
+      height: 100%;
+      flex-direction: column;
+      padding: 22px;
+      background: white;
+    }
+    .cart-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--line);
+    }
+    .close-button {
+      border: 0;
+      background: transparent;
+      font-size: 25px;
+    }
+    .cart-items { flex: 1; overflow: auto; }
+    .cart-row {
+      display: grid;
+      grid-template-columns: 48px 1fr auto;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .cart-emoji { font-size: 30px; }
+    .cart-name { font-size: 14px; font-weight: 700; }
+    .cart-price { margin-top: 4px; color: var(--muted); font-size: 13px; }
+    .quantity { display: flex; align-items: center; gap: 8px; }
+    .quantity button {
+      width: 27px;
+      height: 27px;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      background: white;
+    }
+    .cart-summary { padding-top: 15px; border-top: 1px solid var(--line); }
+    .total { display: flex; justify-content: space-between; margin-bottom: 14px; font-size: 18px; font-weight: 800; }
+    .checkout {
+      width: 100%;
+      padding: 13px;
+      border: 0;
+      border-radius: 7px;
+      color: white;
+      background: var(--green);
+      font-weight: 700;
+    }
+    .cart-empty { padding: 28px 0; color: var(--muted); text-align: center; }
+
+    @media (max-width: 800px) {
+      .products { grid-template-columns: repeat(2, 1fr); }
+      .hero { grid-template-columns: 1fr; }
+      .hero-art { min-height: 190px; }
+    }
+    @media (max-width: 520px) {
+      header { gap: 10px; padding: 13px 14px; }
+      .logo { font-size: 18px; }
+      .search { width: 100%; min-width: 60px; }
+      .cart-button { padding: 9px; font-size: 12px; }
+      main { padding: 0 14px; }
+      .products { gap: 10px; }
+      .product-art { min-height: 140px; font-size: 58px; }
+      .product-info { padding: 11px; }
+      .add-button { padding: 8px; }
+      .benefits { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="announcement">Free shipping on orders over ₹1,499 · Easy 7-day returns</div>
+
+  <header>
+    <a class="logo" href="#">Everyday Store</a>
+    <input class="search" id="search" type="search" placeholder="Search products..." aria-label="Search products">
+    <button class="cart-button" id="openCart" type="button">🛒 Cart (<span id="cartCount">0</span>)</button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Thoughtful picks for everyday life</div>
+        <h1>Good things, made for your day.</h1>
+        <p>Discover useful, well-designed essentials for your home, desk, and daily routine.</p>
+        <a class="shop-link" href="#shop">Shop collection</a>
+      </div>
+      <div class="hero-art" aria-label="Shopping bags">🛍️</div>
+    </section>
+
+    <section id="shop">
+      <div class="section-heading">
+        <div>
+          <h2>Shop our collection</h2>
+          <p>Small upgrades that make a big difference.</p>
+        </div>
+      </div>
+      <div class="filters" id="filters"></div>
+      <div class="products" id="products"></div>
+    </section>
+
+    <section class="benefits" aria-label="Store benefits">
+      <div class="benefit"><strong>🚚 Reliable delivery</strong><span>Shipping details shown before checkout.</span></div>
+      <div class="benefit"><strong>↩️ Easy returns</strong><span>Contact our demo support team within 7 days.</span></div>
+      <div class="benefit"><strong>🔒 Secure shopping</strong><span>This sample site does not collect payment details.</span></div>
+    </section>
+  </main>
+
+  <footer>© 2025 Everyday Store · Student e-commerce project demo</footer>
+
+  <div class="overlay" id="cartOverlay" role="dialog" aria-modal="true" aria-label="Shopping cart">
+    <div class="cart-panel">
+      <div class="cart-heading">
+        <h2>Your cart</h2>
+        <button class="close-button" id="closeCart" aria-label="Close cart">×</button>
+      </div>
+      <div class="cart-items" id="cartItems"></div>
+      <div class="cart-summary">
+        <div class="total"><span>Total</span><span id="cartTotal">₹0</span></div>
+        <button class="checkout" id="checkout">Continue to checkout</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const products = [
+      { id: 1, name: "Stoneware Coffee Mug", category: "Home", price: 549, emoji: "☕", rating: "★★★★★" },
+      { id: 2, name: "Canvas Everyday Tote", category: "Accessories", price: 799, emoji: "👜", rating: "★★★★☆" },
+      { id: 3, name: "Desk Organizer", category: "Workspace", price: 999, emoji: "🗂️", rating: "★★★★★" },
+      { id: 4, name: "Soft Cotton Cushion", category: "Home", price: 1199, emoji: "🛋️", rating: "★★★★☆" },
+      { id: 5, name: "Steel Water Bottle", category: "Accessories", price: 699, emoji: "🧴", rating: "★★★★★" },
+      { id: 6, name: "Minimal Table Lamp", category: "Workspace", price: 1499, emoji: "💡", rating: "★★★★☆" },
+      { id: 7, name: "Ceramic Planter", category: "Home", price: 649, emoji: "🪴", rating: "★★★★★" },
+      { id: 8, name: "Daily Notes Journal", category: "Workspace", price: 399, emoji: "📓", rating: "★★★★☆" }
+    ];
+
+    let selectedCategory = "All";
+    let cart = {};
+
+    const money = amount => "₹" + amount.toLocaleString("en-IN");
+    const categories = ["All", ...new Set(products.map(product => product.category))];
+
+    function renderFilters() {
+      document.getElementById("filters").innerHTML = categories.map(category =>
+        `<button class="filter ${selectedCategory === category ? "active" : ""}" data-category="${category}">${category}</button>`
+      ).join("");
+
+      document.querySelectorAll(".filter").forEach(button => {
+        button.addEventListener("click", () => {
+          selectedCategory = button.dataset.category;
+          renderFilters();
+          renderProducts();
+        });
+      });
+    }
+
+    function renderProducts() {
+      const query = document.getElementById("search").value.trim().toLowerCase();
+      const filtered = products.filter(product =>
+        (selectedCategory === "All" || product.category === selectedCategory) &&
+        product.name.toLowerCase().includes(query)
+      );
+
+      document.getElementById("products").innerHTML = filtered.length
+        ? filtered.map(product => `
+          <article class="card">
+            <div class="product-art">${product.emoji}</div>
+            <div class="product-info">
+              <span class="tag">${product.category}</span>
+              <h3>${product.name}</h3>
+              <div class="rating">${product.rating} <span style="color:#68736c">(demo)</span></div>
+              <div class="product-bottom">
+                <span class="price">${money(product.price)}</span>
+                <button class="add-button" data-add="${product.id}">Add to cart</button>
+              </div>
+            </div>
+          </article>`).join("")
+        : `<p class="empty">No products found. Try another search.</p>`;
+
+      document.querySelectorAll("[data-add]").forEach(button =>
+        button.addEventListener("click", () => addToCart(Number(button.dataset.add)))
+      );
+    }
+
+    function addToCart(id) {
+      cart[id] = (cart[id] || 0) + 1;
+      renderCart();
+    }
+
+    function changeQuantity(id, change) {
+      cart[id] = (cart[id] || 0) + change;
+      if (cart[id] <= 0) delete cart[id];
+      renderCart();
+    }
+
+    function renderCart() {
+      const entries = Object.entries(cart);
+      const count = entries.reduce((sum, [, quantity]) => sum + quantity, 0);
+      const total = entries.reduce((sum, [id, quantity]) =>
+        sum + products.find(product => product.id === Number(id)).price * quantity, 0
+      );
+
+      document.getElementById("cartCount").textContent = count;
+      document.getElementById("cartTotal").textContent = money(total);
+      document.getElementById("cartItems").innerHTML = entries.length
+        ? entries.map(([id, quantity]) => {
+            const product = products.find(item => item.id === Number(id));
+            return `<div class="cart-row">
+              <span class="cart-emoji">${product.emoji}</span>
+              <div><div class="cart-name">${product.name}</div><div class="cart-price">${money(product.price)} each</div></div>
+              <div class="quantity">
+                <button data-change="${id}" data-step="-1" aria-label="Decrease quantity">−</button>
+                <span>${quantity}</span>
+                <button data-change="${id}" data-step="1" aria-label="Increase quantity">+</button>
+              </div>
+            </div>`;
+          }).join("")
+        : `<div class="cart-empty">Your cart is empty. Add a product to get started.</div>`;
+
+      document.querySelectorAll("[data-change]").forEach(button =>
+        button.addEventListener("click", () =>
+          changeQuantity(Number(button.dataset.change), Number(button.dataset.step))
+        )
+      );
+    }
+
+    document.getElementById("search").addEventListener("input", renderProducts);
+    document.getElementById("openCart").addEventListener("click", () =>
+      document.getElementById("cartOverlay").classList.add("open")
+    );
+    document.getElementById("closeCart").addEventListener("click", () =>
+      document.getElementById("cartOverlay").classList.remove("open")
+    );
+    document.getElementById("cartOverlay").addEventListener("click", event => {
+      if (event.target.id === "cartOverlay") event.target.classList.remove("open");
+    });
+    document.getElementById("checkout").addEventListener("click", () =>
+      alert("This is a student demo. Checkout and payment are not connected.")
+    );
+
+    renderFilters();
+    renderProducts();
+    renderCart();
+  </script>
+</body>
+</html>
